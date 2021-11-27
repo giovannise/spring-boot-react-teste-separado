@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class MostrarcabealhosNomeeemailparaatabelaTest extends BaseTest {
+public class MostrarcabealhosNomeeemailparaatabelaTestOld {
 
     private WebDriver driver;
 
@@ -32,13 +32,14 @@ public class MostrarcabealhosNomeeemailparaatabelaTest extends BaseTest {
 
     @Test
     public void mostrarcabealhosNomeeemailparaatabela() {
-        carregarPaginaInicial();
-        assertThat(clientesPage.obterTextoPrimeiroCabecalho(), is("Nome"));;
-        assertThat(clientesPage.obterTextoSegundoCabecalho(), is("E-mail"));;
+        driver.get("http://localhost:3000/clients");
+        driver.manage().window().setSize(new Dimension(1442, 813));
+        assertThat(driver.findElement(By.cssSelector("th:nth-child(1)")).getText(), is("Nome"));
+        assertThat(driver.findElement(By.cssSelector("th:nth-child(2)")).getText(), is("E-mail"));
     }
 
     @Test
-    public void excluirPrimeiroClienteDaLista() throws InterruptedException {
+    public void excluirPrimeiroClienteDaLista() {
         driver.get("http://localhost:3000/clients");
         driver.manage().window().setSize(new Dimension(1442, 813));
         String primeiroNomeNaLista;
@@ -46,11 +47,13 @@ public class MostrarcabealhosNomeeemailparaatabelaTest extends BaseTest {
         elementoPrimeiroNomeNaLista = driver.findElement(By.cssSelector("#root > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1)"));
         primeiroNomeNaLista = elementoPrimeiroNomeNaLista.getText();
         System.out.println(primeiroNomeNaLista);
-        WebElement botaoApagarDoPrimeiroNomeNaLista = driver.findElement(By.cssSelector("#root > div > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > div > button"));
-        botaoApagarDoPrimeiroNomeNaLista.click();
+        WebElement botaoPrimeiroNomeNaLista = driver.findElement(By.cssSelector("#root > div > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > div > button"));
+        botaoPrimeiroNomeNaLista.click();
+        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
         elementoPrimeiroNomeNaLista = driver.findElement(By.cssSelector("#root > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1)"));
         primeiroNomeNaLista = elementoPrimeiroNomeNaLista.getText();
         System.out.println(primeiroNomeNaLista);
-    }
 
+    }
 }
+
